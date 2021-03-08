@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- registration form -->
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form.user_type.label }}
+        {{ form.user_type}}
+
+        {{ form.username.label }}
+        {{ form.username}}
+        
+        {{ form.password1.label }}
+        {{ form.password1}}
+        
+        {{ form.password2.label }}
+        {{ form.password2}}
+
+        {{ form.address.label }}
+        {{ form.address}}
+        
+        <button type="submit">Register</button>
+    </form>
+    <!-- -->
+    
+    {{form.errors}}
+
+    <a href="{% url 'login' %}">Already Have an Account? Log in Here</a>
+</html>

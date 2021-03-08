@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <button type="submit">Login</button>
+        {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+        {% endfor %}
+        <a href="{% url 'register' %}">Don't Have an Account Yet? Create One Here</a>
+    </form>
+</html>
