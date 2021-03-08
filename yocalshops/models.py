@@ -21,7 +21,7 @@ class Helper(models.Model):
         return self.name
 
 
-class Shotengai(models.Model):
+class ShoppingStreet(models.Model):
     name = models.CharField(max_length=200, null=True)
     ward = models.CharField(max_length=200, null=True)
     town = models.CharField(max_length=200, null=True)
@@ -36,8 +36,8 @@ class Order(models.Model):
     customer = models.ForeignKey(
         Customer, null=True, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    shotengai = models.ForeignKey(
-        Shotengai, null=True, on_delete=models.SET_NULL)
+    shoppingstreet = models.ForeignKey(
+        ShoppingStreet, null=True, on_delete=models.SET_NULL)
     STATUS = (
         ("Pending", "Pending"),
         ("On the way to the store", "On the way to the store"),
