@@ -26,4 +26,10 @@ class RegisterForm(UserCreationForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = ["shoppingstreet"]
+
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = ["name", "category", "quantity", "store"]

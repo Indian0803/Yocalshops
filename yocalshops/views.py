@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from .forms import RegisterForm, OrderForm
+from .forms import RegisterForm, OrderForm, ItemForm
 from .models import *
 # Create your views here.
 
@@ -85,15 +85,27 @@ def customer_chat(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_orders(request):
-
-    form = OrderForm()
     if request.method == "POST":
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("customer_home")
+        oform = OrderForm(request.POST)
+        iform = ItemForm(request.POST)
+        if oform.is_valid() and iform.is_valid():
+            order = oform.save()
+            item = iform.save()
 
-    context = {"form": form}
+            c = Customer.objects.get(name=request.user.username)
+
+            order.customer = c
+            order.status = "Pending"
+            item.order = order
+
+            order.save()
+            item.save()
+            return redirect("customer_home")
+    else:
+        oform = OrderForm()
+        iform = ItemForm()
+
+    context = {"oform": oform, "iform": iform}
     return render(request, "yocalshops/customer_orders.html", context)
 
 

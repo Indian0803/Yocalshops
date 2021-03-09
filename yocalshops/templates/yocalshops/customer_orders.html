@@ -9,7 +9,9 @@
     <form method="POST" action="">
         {% csrf_token %}
 
-        {{form}}
+        {{oform}}
+
+        {{iform}}
         <input type="submit" name="Submit">
     </form>
 </html>

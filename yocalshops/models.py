@@ -49,12 +49,11 @@ class Order(models.Model):
         Helper, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.customer.name
+        return str(self.customer.name)
 
 
 class Item(models.Model):
     name = models.CharField(max_length=200, null=True)
-    store = models.CharField(max_length=200, null=True)
     CATEGORY = (
         ("Meat", "Meat"),
         ("Fish", "Fish"),
@@ -64,8 +63,9 @@ class Item(models.Model):
     )
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
     quantity = models.IntegerField(null=True)
+    store = models.CharField(max_length=200, null=True)
     order = models.ForeignKey(
         Order, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
