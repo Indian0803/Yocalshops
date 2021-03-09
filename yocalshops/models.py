@@ -4,21 +4,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, null=True)
-    address = models.CharField(max_length=100, null=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Helper(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class ShoppingStreet(models.Model):
@@ -29,13 +20,13 @@ class ShoppingStreet(models.Model):
     longitude = models.FloatField()
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
-class Order(models.Model):
-    customer = models.ForeignKey(
-        Customer, null=True, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+class Customer(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, null=True)
+    address = models.CharField(max_length=100, null=True)
     shoppingstreet = models.ForeignKey(
         ShoppingStreet, null=True, on_delete=models.SET_NULL)
     STATUS = (
@@ -49,7 +40,7 @@ class Order(models.Model):
         Helper, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return str(self.customer.name)
+        return str(self.name)
 
 
 class Item(models.Model):
@@ -64,8 +55,8 @@ class Item(models.Model):
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
     quantity = models.IntegerField(null=True)
     store = models.CharField(max_length=200, null=True)
-    order = models.ForeignKey(
-        Order, null=True, on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)

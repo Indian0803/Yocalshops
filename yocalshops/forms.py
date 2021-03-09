@@ -25,7 +25,7 @@ class RegisterForm(UserCreationForm):
 
 class OrderForm(ModelForm):
     class Meta:
-        model = Order
+        model = Customer
         fields = ["shoppingstreet"]
 
 

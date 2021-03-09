@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from django.forms import inlineformset_factory
 from .decorators import unauthenticated_user, allowed_users
 from .forms import RegisterForm, OrderForm, ItemForm
 from .models import *
@@ -85,27 +86,26 @@ def customer_chat(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_orders(request):
+    ItemFormSet = inlineformset_factory(
+        Customer, Item, fields=["name", "category", "quantity", "store"], extra=10)
+    customer = Customer.objects.get(name=request.user.username)
+    formset = ItemFormSet(instance=customer)
+
     if request.method == "POST":
         oform = OrderForm(request.POST)
-        iform = ItemForm(request.POST)
-        if oform.is_valid() and iform.is_valid():
-            order = oform.save()
-            item = iform.save()
+        formset = ItemFormSet(request.POST, instance=customer)
+        if oform.is_valid() and formset.is_valid():
+            formset.save()
 
-            c = Customer.objects.get(name=request.user.username)
-
-            order.customer = c
-            order.status = "Pending"
-            item.order = order
-
-            order.save()
-            item.save()
+            customer.shoppingstreet = oform.cleaned_data.get("shoppingstreet")
+            customer.status = "Pending"
+            customer.save()
             return redirect("customer_home")
     else:
         oform = OrderForm()
         iform = ItemForm()
 
-    context = {"oform": oform, "iform": iform}
+    context = {"oform": oform, "formset": formset}
     return render(request, "yocalshops/customer_orders.html", context)
 
 
