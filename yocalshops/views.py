@@ -105,8 +105,6 @@ def customer_orders(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_status(request):
-    yes = "yes"
-    context = {"yes": yes}
     return render(request, "yocalshops/customer_status.html", context)
 
 
