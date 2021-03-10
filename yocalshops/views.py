@@ -78,13 +78,6 @@ def customer_home(request):
 
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
-def customer_chat(request):
-    context = {}
-    return render(request, "yocalshops/customer_chat.html", context)
-
-
-@allowed_users(allowed_roles=["admin", "customer"])
-@login_required(login_url="login")
 def customer_orders(request):
     ItemFormSet = inlineformset_factory(
         Customer, Item, fields=["name", "category", "quantity", "store"], extra=10)
@@ -129,13 +122,6 @@ def customer_status(request):
 def helper_home(request):
     context = {}
     return render(request, "yocalshops/helper_home.html", context)
-
-
-@allowed_users(allowed_roles=["admin", "helper"])
-@login_required(login_url="login")
-def helper_chat(request):
-    context = {}
-    return render(request, "yocalshops/helper_chat.html", context)
 
 
 @allowed_users(allowed_roles=["admin", "helper"])
