@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{ request.user }}
-    <a href="{% url 'logout' %}">Logout</a>
+    <head>
+        <title>Helper Page</title>
+        <style>
+            .order_delivery{
+            display: flex;
+            justify-content: space-around;
+            }
+            .order-link{
+                margin:auto;
+                font-size: 40px;
+                text-decoration: none;
+                background-color: black;
+                color: white;
+                border-radius: 10px;
+                padding: 10px 20px; 
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        {{ request.user }}
+        <a href="{% url 'logout' %}">Logout</a>
+        <hr />
 
-    
-    <a href="{% url 'helper_orders' %}">Accept an Order</a>
-    <a href="{% url 'helper_delivery' %}">Deliver Your Order</a>
+        <div class = order_delivery>
+            <a class = "order-link" href="{% url 'helper_orders' %}">Accept an Order</a>
+            <hr width="1" size = 500>
+            <a class = "order-link" href="{% url 'helper_delivery' %}">Deliver Your Order</a>
+        </div>
+    </body>
 </html>
