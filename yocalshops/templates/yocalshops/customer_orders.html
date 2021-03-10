@@ -3,8 +3,7 @@
     {{ request.user }}
     <a href="{% url 'logout' %}">Logout</a>
     <a href="{% url 'customer_home' %}">Home</a>
-    <a href="{% url 'customer_chat' %}">Chat</a>
-    <a href="{% url 'customer_settings' %}">Settings</a>
+
     
     <form method="POST" action="">
         {% csrf_token %}

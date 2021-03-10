@@ -104,13 +104,6 @@ def customer_orders(request):
 
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
-def customer_settings(request):
-    context = {}
-    return render(request, "yocalshops/customer_settings.html", context)
-
-
-@allowed_users(allowed_roles=["admin", "customer"])
-@login_required(login_url="login")
 def customer_status(request):
     yes = "yes"
     context = {"yes": yes}
@@ -143,10 +136,3 @@ def helper_details(request):
 def helper_orders(request):
     context = {}
     return render(request, "yocalshops/helper_orders.html", context)
-
-
-@allowed_users(allowed_roles=["admin", "helper"])
-@login_required(login_url="login")
-def helper_settings(request):
-    context = {}
-    return render(request, "yocalshops/helper_settings.html", context)
