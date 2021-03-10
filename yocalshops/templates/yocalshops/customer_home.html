@@ -1,9 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{ request.user }}
-    <a href="{% url 'logout' %}">Logout</a>
+    <head>
+        <title>Customer Page</title>
+        <style>
+            .create_order{
+            display: flex;
+            justify-content: space-around;
+            }
+            .order-link{
+                margin:auto;
+                font-size: 40px;
+                text-decoration: none;
+                background-color: black;
+                color: white;
+                border-radius: 10px;
+                padding: 10px 20px; 
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top">
+            <header id="name", style="font-size: 30px;">Hi, {{ request.user }}</header>
+            <a href="{% url 'logout' %}", style="float: right;margin-right: -20px;margin-top: -45px;font-size: 30px;">Logout</a>
+        </div>
 
-    
-    <a href="{% url 'customer_orders' %}">Make an Order</a>
-    <a href="{% url 'customer_status' %}">Check Your Order</a>
-</html>
+        <div class = create_order>
+            <a class = "order-link" href="{% url 'customer_orders' %}">Create Your Order</a>
+            <hr width="1" size = 500>
+            <a class = "order-link" href="{% url 'customer_status' %}">Check Your Order</a>
+        </div>
+    </body>
+    <style>
+        #top{padding: 20px 40px;
+        border-bottom-style: outset;
+        border-color: black;
+        background-color: white;}
+    </style>
+</html>    

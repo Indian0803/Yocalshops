@@ -4,5 +4,13 @@
     <a href="{% url 'logout' %}">Logout</a>
     <a href="{% url 'customer_home' %}">Home</a>
 
-    
+    {% if status == "Pending" %}
+        Please Wait Until Your Order Gets Accepted
+    {% elif status == None %}
+        You Have No Order Created
+    {% else %}
+        Your Helper: {{helper.name}}
+        Order Status: {{ status }}
+
+    {% endif %}
 </html>

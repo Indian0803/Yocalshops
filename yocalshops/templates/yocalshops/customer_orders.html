@@ -3,11 +3,10 @@
     {{ request.user }}
     <a href="{% url 'logout' %}">Logout</a>
     <a href="{% url 'customer_home' %}">Home</a>
-
     
     <form method="POST" action="">
         {% csrf_token %}
-        
+
         {{oform}}
         <hr>
         {{ formset.management_form }}
@@ -15,7 +14,6 @@
             {{form}}
             <hr>
         {% endfor %}
-            <input type="submit" name="Submit">
+        <input type="submit" name="Submit">
     </form>
 </html>
-

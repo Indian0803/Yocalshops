@@ -20,14 +20,21 @@
         </style>
     </head>
     <body>
-        {{ request.user }}
-        <a href="{% url 'logout' %}">Logout</a>
-        <hr />
+        <div id="top">
+            <header id="name", style="font-size: 30px;">Hi, {{ request.user }}</header>
+            <a href="{% url 'logout' %}", style="float: right;margin-right: -20px;margin-top: -45px;font-size: 30px;">Logout</a>
+        </div>
 
         <div class = order_delivery>
             <a class = "order-link" href="{% url 'helper_orders' %}">Accept an Order</a>
             <hr width="1" size = 500>
-            <a class = "order-link" href="{% url 'helper_delivery' %}">Deliver Your Order</a>
+            <a class = "order-link" href="{% url 'helper_delivery' c_id %}">Deliver Your Order</a>
         </div>
     </body>
+    <style>
+        #top{padding: 20px 40px;
+        border-bottom-style: outset;
+        border-color: black;
+        background-color: white;}
+    </style>
 </html>

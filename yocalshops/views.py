@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from .decorators import unauthenticated_user, allowed_users
-from .forms import RegisterForm, OrderForm, ItemForm
+from .forms import *
 from .models import *
 # Create your views here.
 
@@ -105,32 +105,81 @@ def customer_orders(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_status(request):
+    customer = Customer.objects.get(name=request.user.username)
+    if customer.status == "Pending":
+        status = "Pending"
+        context = {"status": status}
+    elif customer.status == None:
+        status = None
+        context = {"status": status}
+    else:
+        status = customer.status
+        helper = customer.helper
+        context = {"status": status, "helper": helper}
+
+    # Helper's address
     return render(request, "yocalshops/customer_status.html", context)
 
 
 @allowed_users(allowed_roles=["admin", "helper"])
 @login_required(login_url="login")
 def helper_home(request):
-    context = {}
+    helper = Helper.objects.get(name=request.user.username)
+    c = Customer.objects.filter(helper=helper)
+    if not c:
+        c_id = 0
+    else:
+        customer = c[0]
+        c_id = customer.id
+    context = {"c_id": c_id}
     return render(request, "yocalshops/helper_home.html", context)
 
 
-@allowed_users(allowed_roles=["admin", "helper"])
-@login_required(login_url="login")
-def helper_delivery(request):
-    context = {}
+def helper_delivery(request, c_id):
+    if c_id != 0:
+        customer = Customer.objects.get(id=c_id)
+        helper = Helper.objects.get(name=request.user.username)
+        customer.helper = helper
+        customer.status = "On the way to the store"
+        customer.save()
+        shoppingstreet = customer.shoppingstreet
+
+        items = Item.objects.filter(customer=customer)
+
+        form = Status()
+        if request.method == "POST":
+            form = Status(request.POST)
+
+            if form.is_valid():
+                customer.status = form.cleaned_data.get("status")
+                if customer.status == "Delivered":
+                    customer.status = None
+                    customer.shoppingstreet = None
+                    customer.helper = None
+                    customer.save()
+                    Item.objects.filter(customer=customer).delete()
+                    return redirect("helper_home")
+        context = {"customer": customer,
+                   "items": items, "c_id": c_id, "form": form, "shoppingstreet": shoppingstreet}
+    else:
+        context = {"c_id": c_id}
     return render(request, "yocalshops/helper_delivery.html", context)
 
 
-@allowed_users(allowed_roles=["admin", "helper"])
-@login_required(login_url="login")
-def helper_details(request):
-    context = {}
+def helper_details(request, id):
+    print(id)
+    customer = Customer.objects.get(id=id)
+    items = Item.objects.filter(customer=customer)
+    user = Helper.objects.get(name=request.user.username)
+
+    context = {"customer": customer, "items": items, "user": user}
     return render(request, "yocalshops/helper_details.html", context)
 
 
 @allowed_users(allowed_roles=["admin", "helper"])
 @login_required(login_url="login")
 def helper_orders(request):
-    context = {}
+    customers = Customer.objects.filter(status="Pending")
+
+    context = {"customers": customers}
     return render(request, "yocalshops/helper_orders.html", context)

@@ -9,7 +9,7 @@ def unauthenticated_user(view_func):
         elif request.user.is_authenticated and request.user.groups.filter(name="helper").exists():
             return redirect("helper_home")
         else:
-            return(view_func(request, *args, *kwargs))
+            return(view_func(request, *args, **kwargs))
 
     return wrapper_func
 

@@ -3,6 +3,11 @@
     {{ request.user }}
     <a href="{% url 'logout' %}">Logout</a>
     <a href="{% url 'helper_home' %}">Home</a>
-
-    
+    <hr>
+    {% for name in customers %}
+        Customer: {{ name }}
+        ShoppingStreet: {{ name.shoppingstreet }}
+        <a href="{% url 'helper_details' name.id %}">Details</a>
+        <hr>
+    {% endfor %}
 </html>

@@ -3,6 +3,38 @@
     {{ request.user }}
     <a href="{% url 'logout' %}">Logout</a>
     <a href="{% url 'helper_home' %}">Home</a>
-
     
+    {% if c_id == 0 %}
+        You Have Not Accepted Any Order Yet!
+    
+    {% else %}
+        <head>
+        <h1>Here you can see what your customer ordered and where they live.</h1>
+        </head>>
+        <body style = "background: white">
+            Items:
+            {% for name in items %}
+                Item Name: {{name}}
+                Category: {{name.category}}
+                Quantity: {{name.quantity}}
+                Store: {{name.store}}
+                <hr>
+            {% endfor %}
+        </body>
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            {{ form }}
+            <input type="submit" name="Change">
+        </form>
+    {% endif %}
+
+    {{ shoppingstreet.latitude|json_script:"latitude" }}
+    {{ shoppingstreet.longitude|json_script:"longitude" }}
+    {{ customer.address|json_script:"address" }}
+    <script>
+        var latitude = JSON.parse(document.getElementById("latitude").textContent);
+        var longitude = JSON.parse(document.getElementById("longitude").textContent);
+        var address = JSON.parse(document.getElementById("address").textContent);
+    </script>
 </html>

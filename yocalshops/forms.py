@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.db import models
 from django import forms
 from .models import *
@@ -33,3 +33,12 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ["name", "category", "quantity", "store"]
+
+
+class Status(forms.Form):
+    status = forms.fields.ChoiceField(choices=(
+        ("On the way", "On the way"),
+        ("Delivered", "Delivered")),
+        required=True,
+        widget=forms.widgets.Select
+    )
