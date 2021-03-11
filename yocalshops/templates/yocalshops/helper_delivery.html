@@ -23,10 +23,8 @@
         </body>
         <form method="POST" action="">
             {% csrf_token %}
-            
-            {{ form }}
-            <input type="submit" name="Change">
-        </form>
+            <input type="submit" value="Delivery Finished">
+        </form>>
     {% endif %}
 
     {{ shoppingstreet.latitude|json_script:"latitude" }}

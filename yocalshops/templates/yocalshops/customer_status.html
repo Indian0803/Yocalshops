@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{ request.user }}
-    <a href="{% url 'logout' %}">Logout</a>
-    <a href="{% url 'customer_home' %}">Home</a>
+    <div id="top">
+        <header id="name", style="font-size: 30px;"> <a href="{% url 'customer_home' %}">Home</a> Hi, {{ request.user }}</header>
+        <a href="{% url 'logout' %}", style="float: right;margin-right: -20px;margin-top: -45px;font-size: 30px;">Logout</a>
+    </div>
 
     {% if status == "Pending" %}
-        Please Wait Until Your Order Gets Accepted
+        <h1 class="text">Sorry! Please Wait Until Your Order Gets Accepted</h1>
+    
     {% elif status == None %}
-        You Have No Order Created
+        <h1 class="text">You Have No Order Created Yet!</h1>
+    
     {% else %}
-        Your Helper: {{helper.name}}
-        Order Status: {{ status }}
-
+        <h1 class="text">Your Helper Is On The Way</h1>
+        <h1>Your Helper: {{helper.name}}</h1>
     {% endif %}
+
+    <style>
+        #top{padding: 20px 20px;
+        border-bottom-style: outset;
+        border-color: black;
+        background-color: white;}
+        .text{
+            text-align:center
+        }
+    </style>
 </html>

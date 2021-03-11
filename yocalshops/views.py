@@ -21,17 +21,19 @@ def home(request):
 
 @unauthenticated_user
 def registerPage(request):
+    # using RegisterForm to create a user if the form is valid
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get("username")
 
+            # checking for the usertype so that either Customer/Helper object can be created
             role = form.cleaned_data.get("user_type")
             group = Group.objects.get(name=role)
             user.groups.add(group)
-
             address = form.cleaned_data.get("address")
+
             if role == "customer":
                 Customer.objects.create(
                     user=user, name=username, address=address)
@@ -94,6 +96,9 @@ def customer_home(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_orders(request):
+    # Using 2 forms:
+    # OrderForm to make the user specify the shopping street, which will be stored in the Customer object
+    # ItemFormSet to make the user type in the actual orders, which will be stored in the Item object that will be subject to the customer
     ItemFormSet = inlineformset_factory(
         Customer, Item, fields=["name", "category", "quantity", "store"], extra=10)
     customer = Customer.objects.get(name=request.user.username)
@@ -122,6 +127,9 @@ def customer_orders(request):
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_status(request):
+    # The status of the customer's order is stored in the customer object
+    # The status is checked and is passed into the template
+    # If the order has been accepted by a helper, the helper object is passed in so that the name and location can be displayed to the customer
     customer = Customer.objects.get(name=request.user.username)
     if customer.status == "Pending":
         status = "Pending"
@@ -143,6 +151,9 @@ def customer_status(request):
 @allowed_users(allowed_roles=["admin", "helper"])
 @login_required(login_url="login")
 def helper_home(request):
+    # checks if the helper has an order at the moment
+    # c_id is the id of the customer and it is set to 0 if helper has no order at the moment
+    # c_id is passed into the template, which will then be passed into the helper_delivery function
     helper = Helper.objects.get(name=request.user.username)
     c = Customer.objects.filter(helper=helper)
     if not c:
@@ -153,7 +164,7 @@ def helper_home(request):
     context = {"c_id": c_id}
     return render(request, "yocalshops/helper_home.html", context)
 
-# display a list of pending orders
+# display a list of pending orders by passing in the Customer objects
 
 
 @allowed_users(allowed_roles=["admin", "helper"])
@@ -168,7 +179,8 @@ def helper_orders(request):
 
 
 def helper_details(request, id):
-    print(id)
+    # When the helper clicks on the order, the id of the customer that created the order will be passed in to this function
+    # Information about customer's order will be passed into the template
     customer = Customer.objects.get(id=id)
     items = Item.objects.filter(customer=customer)
     user = Helper.objects.get(name=request.user.username)
@@ -179,31 +191,27 @@ def helper_details(request, id):
 
 # display the order information and map. Allow the helper to change the status of the order
 def helper_delivery(request, c_id):
+    # Check if the helper has accepted any order, and c_id will be 0 if the helper has not customer
+    # information about the order is passed into the template
     if c_id != 0:
         customer = Customer.objects.get(id=c_id)
         helper = Helper.objects.get(name=request.user.username)
         customer.helper = helper
-        customer.status = "On the way to the store"
+        customer.status = "On The Way"
         customer.save()
         shoppingstreet = customer.shoppingstreet
 
         items = Item.objects.filter(customer=customer)
-
-        form = Status()
+        # When the user clicks on the button inside the template, the delivering is completed and the order is deleted
         if request.method == "POST":
-            form = Status(request.POST)
-
-            if form.is_valid():
-                customer.status = form.cleaned_data.get("status")
-                if customer.status == "Delivered":
-                    customer.status = None
-                    customer.shoppingstreet = None
-                    customer.helper = None
-                    customer.save()
-                    Item.objects.filter(customer=customer).delete()
-                    return redirect("helper_home")
+            customer.status = None
+            customer.shoppingstreet = None
+            customer.helper = None
+            customer.save()
+            Item.objects.filter(customer=customer).delete()
+            return redirect("helper_home")
         context = {"customer": customer,
-                   "items": items, "c_id": c_id, "form": form, "shoppingstreet": shoppingstreet}
+                   "items": items, "c_id": c_id, "shoppingstreet": shoppingstreet}
     else:
         context = {"c_id": c_id}
     return render(request, "yocalshops/helper_delivery.html", context)

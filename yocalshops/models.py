@@ -31,9 +31,7 @@ class Customer(models.Model):
         ShoppingStreet, null=True, on_delete=models.SET_NULL)
     STATUS = (
         ("Pending", "Pending"),
-        ("On the way to the store", "On the way to the store"),
-        ("On the way", "On the way"),
-        ("Delivered", "Delivered")
+        ("On The way", "On The Way")
     )
     status = models.CharField(max_length=200, null=True, choices=STATUS)
     helper = models.ForeignKey(

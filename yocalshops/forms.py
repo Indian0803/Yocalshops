@@ -33,12 +33,3 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ["name", "category", "quantity", "store"]
-
-
-class Status(forms.Form):
-    status = forms.fields.ChoiceField(choices=(
-        ("On the way", "On the way"),
-        ("Delivered", "Delivered")),
-        required=True,
-        widget=forms.widgets.Select
-    )
