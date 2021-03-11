@@ -4,8 +4,8 @@
         <title>Check Orders</title>
     </head>
     <body style = "background: white">
-        <div id="top">
-            <header id="name", style="font-size: 30px;"> <a href="{% url 'helper_home' %}">Home</a> Hi, {{ request.user }}</header>
+        <div class="top">
+            <header style="font-size: 30px;"> <a href="{% url 'helper_home' %}">Home</a> Hi, {{ request.user }}</header>
             <a href="{% url 'logout' %}", style="float: right;margin-right: -20px;margin-top: -45px;font-size: 30px;">Logout</a>
         </div>
 
@@ -22,7 +22,7 @@
 
     </body>
     <style>
-        #top{padding: 20px 20px;
+        .top{padding: 20px 20px;
         border-bottom-style: outset;
         border-color: black;
         background-color: white;}
