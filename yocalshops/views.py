@@ -9,38 +9,14 @@ from .forms import *
 from .models import *
 # Create your views here.
 
+# display the home page
+
 
 def home(request):
     return render(request, "yocalshops/home.html")
 
 
-@unauthenticated_user
-def loginPage(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            l = request.user.groups.values_list(
-                'name', flat=True)  # QuerySet Object
-            l_as_list = list(l)
-            if "customer" in l_as_list:
-                return redirect("customer_home")
-            elif "helper" in l_as_list:
-                return redirect("helper_home")
-
-        else:
-            messages.info(request, "Username OR Password is incorrect")
-    context = {}
-    return render(request, "yocalshops/login.html", context)
-
-
-def logoutUser(request):
-    logout(request)
-    return redirect("login")
+# display the register page and varify user information to save it in the User class
 
 
 @unauthenticated_user
@@ -68,12 +44,51 @@ def registerPage(request):
     context = {"form": form}
     return render(request, "yocalshops/register.html", context)
 
+# display the login page and varify the user
+# redirect them to the customer page or helper page according to the usertype
+
+
+@unauthenticated_user
+def loginPage(request):
+    if request.method == "POST":
+        # checking the form submitted by the user and using django authenticate function to authentica user
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+
+        # checking for the user type and redirect them according to the user type
+        if user is not None:
+            login(request, user)
+            l = request.user.groups.values_list(
+                'name', flat=True)
+            l_as_list = list(l)
+            if "customer" in l_as_list:
+                return redirect("customer_home")
+            elif "helper" in l_as_list:
+                return redirect("helper_home")
+
+        else:
+            messages.info(request, "Username OR Password is incorrect")
+    context = {}
+    return render(request, "yocalshops/login.html", context)
+
+# logout the user
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect("login")
+
+# display the customer home page
+
 
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
 def customer_home(request):
     context = {}
     return render(request, "yocalshops/customer_home.html", context)
+
+# allow the user to make orders from the customer_orders page
 
 
 @allowed_users(allowed_roles=["admin", "customer"])
@@ -101,6 +116,8 @@ def customer_orders(request):
     context = {"oform": oform, "formset": formset}
     return render(request, "yocalshops/customer_orders.html", context)
 
+# Display the status of the customer's request, and if a helper accepted the request, display the map
+
 
 @allowed_users(allowed_roles=["admin", "customer"])
 @login_required(login_url="login")
@@ -120,6 +137,8 @@ def customer_status(request):
     # Helper's address
     return render(request, "yocalshops/customer_status.html", context)
 
+# display the helper home page
+
 
 @allowed_users(allowed_roles=["admin", "helper"])
 @login_required(login_url="login")
@@ -134,7 +153,31 @@ def helper_home(request):
     context = {"c_id": c_id}
     return render(request, "yocalshops/helper_home.html", context)
 
+# display a list of pending orders
 
+
+@allowed_users(allowed_roles=["admin", "helper"])
+@login_required(login_url="login")
+def helper_orders(request):
+    customers = Customer.objects.filter(status="Pending")
+
+    context = {"customers": customers}
+    return render(request, "yocalshops/helper_orders.html", context)
+
+# when the helper clicks to see details of the order, show them the details of the order
+
+
+def helper_details(request, id):
+    print(id)
+    customer = Customer.objects.get(id=id)
+    items = Item.objects.filter(customer=customer)
+    user = Helper.objects.get(name=request.user.username)
+
+    context = {"customer": customer, "items": items, "user": user}
+    return render(request, "yocalshops/helper_details.html", context)
+
+
+# display the order information and map. Allow the helper to change the status of the order
 def helper_delivery(request, c_id):
     if c_id != 0:
         customer = Customer.objects.get(id=c_id)
@@ -164,22 +207,3 @@ def helper_delivery(request, c_id):
     else:
         context = {"c_id": c_id}
     return render(request, "yocalshops/helper_delivery.html", context)
-
-
-def helper_details(request, id):
-    print(id)
-    customer = Customer.objects.get(id=id)
-    items = Item.objects.filter(customer=customer)
-    user = Helper.objects.get(name=request.user.username)
-
-    context = {"customer": customer, "items": items, "user": user}
-    return render(request, "yocalshops/helper_details.html", context)
-
-
-@allowed_users(allowed_roles=["admin", "helper"])
-@login_required(login_url="login")
-def helper_orders(request):
-    customers = Customer.objects.filter(status="Pending")
-
-    context = {"customers": customers}
-    return render(request, "yocalshops/helper_orders.html", context)
