@@ -9,20 +9,22 @@
             }
             .order-link{
                 margin:auto;
-                font-size: 40px;
+                font-size: 300%;
                 text-decoration: none;
                 background-color: black;
                 color: white;
                 border-radius: 10px;
-                padding: 10px 20px; 
+                padding: 1% 2%; 
                 font-family: Arial, Helvetica, sans-serif;
             }
         </style>
     </head>
     <body>
         <div class="top">
-            <header style="font-size: 30px;">Hi, {{ request.user }}</header>
-            <a href="{% url 'logout' %}", style="float: right;margin-right: -20px;margin-top: -45px;font-size: 30px;">Logout</a>
+            <header style="font-size: 200%;"> 
+                <a href="{% url 'customer_home' %}">Home</a> Hi, {{ request.user }}
+                <a href="{% url 'logout' %}", style="margin-left:75%;">Logout</a>
+            </header>
         </div>
 
         <div class = create_order>
@@ -32,7 +34,7 @@
         </div>
     </body>
     <style>
-        .top{padding: 20px 40px;
+        .top{padding: 2% 4%;
         border-bottom-style: outset;
         border-color: black;
         background-color: white;}

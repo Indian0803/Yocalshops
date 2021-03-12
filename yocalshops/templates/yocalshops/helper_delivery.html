@@ -1,41 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Delivery</title>
+        <title>Delivery | Yocalshops</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
-    {{ request.user }}
-    <a href="{% url 'logout' %}">Logout</a>
-    <a href="{% url 'helper_home' %}">Home</a>
+    <body style = "background: white">
+
+    <style>
+        .top{
+            font-size: 30px;
+            position: absolute;
+            top:0;
+            left: 5%;
+            float: left;
+        }
+        .logout{
+            text-align: right;
+            font-size: 30px;
+        }
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        
+    </style>
+    <div class="top">
+        {{ request.user }}
+    </div>
+    <a  class="btn btn-lg btn-block" href="{% url 'helper_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
     
+    <div class="logout">
+        <a href="{% url 'logout' %}" style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
+    </div>
     {% if c_id == 0 %}
-        You Have Not Accepted Any Order Yet!
+     
+        <p style="position:absolute; width: 100%; font-size: 50px; top:50%; left: 50%; transform: translateX(-30%) translateY(-50%);">You Have Not Accepted Any Order Yet!</p>
     
     {% else %}
-        <head>
-        <h1>Here you can see what your customer ordered and where they live.</h1>
-        </head>>
-        <body style = "background: white">
-            Items:
-            {% for name in items %}
-                Item Name: {{name}}
-                Category: {{name.category}}
-                Quantity: {{name.quantity}}
-                Store: {{name.store}}
-                <hr>
-            {% endfor %}
-        </body>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <input type="submit" value="Delivery Finished">
-        </form>>
-    {% endif %}
-
+    <form method="POST" action="" class="button">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Delivery Completed" class="btn btn-primary btn-lg btn-block">
+    </form>
+    
+    <div class="order">
+        <h1 class="orderhead">Order Information:</h1>
+        Customer Name: {{customer.name}}
+        <br>
+        Address: {{customer.address}}
+        <br>
+        Shopping Street: {{customer.shoppingstreet}}
+    </div>
+    
+    <div class="items">
+        <h2 class="itemhead">Items:</h2>
+        
+        {% for name in items %}
+        <div class="item">
+            Item Name: {{name}}
+            <br>
+            Category: {{name.category}}
+            <br>
+            Quantity: {{name.quantity}}
+            <br>
+            Store: {{name.store}}
+        </div>
+        {% endfor %}
+    </div>
     {{ shoppingstreet.latitude|json_script:"latitude" }}
     {{ shoppingstreet.longitude|json_script:"longitude" }}
     {{ customer.address|json_script:"address" }}
+    
     <script>
-        var latitude = JSON.parse(document.getElementById("latitude").textContent);
-        var longitude = JSON.parse(document.getElementById("longitude").textContent);
+        
+
+        var mlat= JSON.parse(document.getElementById("latitude").textContent);
+        var mlng = JSON.parse(document.getElementById("longitude").textContent);
         var address = JSON.parse(document.getElementById("address").textContent);
+        var clat = parseFloat(localStorage.getItem("lat"));
+        var clng = parseFloat(localStorage.getItem("lng"));
+        if(clat == NaN |clng == NaN){
+            clat = 35.4437;
+            clng = 139.638031;
+        }
     </script>
+    
+    <div id="map"></div>
+    
+    <script>
+        getLocation(); 
+
+        function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendPosition);
+        } else { 
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+    
+        function sendPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            localStorage.setItem("lat", lat);
+            localStorage.setItem("lng", lng);
+        }
+        function initMap(){
+            var map = new google.maps.Map(document.getElementById("map"),{
+                zoom: 13,
+                center: {lat: clat, lng: clng}
+            });
+            function marker(property){
+                const marker = new google.maps.Marker({
+                    position:property.location,
+                    map:map,
+                    icon: property.icon,
+            });
+        }
+        marker({location:{lat:mlat, lng:mlng}, icon:"http://maps.google.com/mapfiles/ms/icons/red-dot.png"});
+        marker({location:{lat:clat, lng: clng}, icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillOpacity: 1,
+        strokeWeight: 2,
+        fillColor: '#5384ED',
+        strokeColor: '#ffffff',
+        }});
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKwEXZuRP9ZR87MI4eFZmPHYD7fTOsQFk&callback=initMap"></script>
+    
+    
+    <style>
+        * {
+            margin: auto;
+
+        }
+        #map{
+            position: absolute;
+            height: 80%;
+            width: 80%;
+            margin:auto;
+            margin-top:2%;
+            margin-left:10%;
+            border-style: solid;
+        }
+        .order{
+        text-align:center;
+        margin-top:2.5%
+        }
+
+        .items{
+            text-align:center;
+            margin-top:2%
+        }
+        .item{
+        padding:1%;
+        width:80%;
+        margin:auto;
+        margin-top:1%;
+        border: solid;
+        }
+        .button{
+            text-align:center;
+            width:80%;
+            margin-top:2%;
+        }
+    </style>
+    {% endif %}
+    </body>
 </html>
