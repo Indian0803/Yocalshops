@@ -7,8 +7,6 @@ from django.forms import inlineformset_factory
 from .decorators import unauthenticated_user, allowed_users
 from .forms import *
 from .models import *
-from pygeocoder import Geocoder
-import googlemaps
 import geocoder
 # Create your views here.
 

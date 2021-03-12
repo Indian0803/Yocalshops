@@ -2,46 +2,19 @@
 <html lang="en">
     <head>
         <title>Customer Order</title>
-        <style>
-            .order-link{
-            text-decoration: none;
-            color:black;
-            }
-            .container h1{
-                font-size: 1em;
-                margin: 1em 10em;
-                padding: 0.6em;
-                color: white;
-                font-family: Arial, Helvetica, sans-serif;
-                background-color: darkblue;
-                border-radius: 5px;
-            }
-
-            a:hover{
-                color:red;
-            }
-
-            h1{
-                display: flex;
-                justify-content: space-around;
-            }
-
-            hr{
-                color: red;
-            }
-
-        </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
 
     <body style=text-align:center;>
-        <nav id="navbar">
-            <div class="container">
-                {{ request.user }}
-                <a class = "order-link" href="{% url 'customer_home' %}">Home</a>
-                <a class = "order-link" href="{% url 'logout' %}">Logout</a>
-            </div>
-        </nav>
-        <hr>
+        <div class="top">
+            {{ request.user }}
+        </div>
+
+        <a  class="btn btn-lg btn-block " href="{% url 'customer_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
+        
+        <div class="logout">
+            <a href="{% url 'logout' %}" style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
+        </div>
 
         <header id = "main-header">
             <div class="container">
@@ -49,7 +22,7 @@
             </div>
         </header>
 
-        <form method="POST" action="">
+        <form method="POST" action="" class="form">
             {% csrf_token %}
 
             {{oform}}
@@ -59,7 +32,66 @@
                 {{form}}
                 <hr size = -1>
             {% endfor %}
-                <input type="submit" name="Submit">
+            <div class="buttonbox">
+                <input type="submit" value="Create Order" class="btn btn-primary btn-lg btn-block">
+            </div>
         </form>
     </body>
+    <style>
+        * {
+            margin: auto;
+        }
+        .top{
+        font-size: 30px;
+        position: absolute;
+        top:0;
+        left: 5%;
+        float: left;
+        }
+        .logout{
+            text-align: right;
+            font-size: 30px;
+        }
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        .order-link{
+        text-decoration: none;
+        color:black;
+        }
+        .container h1{
+            font-size: 1em;
+            margin: 1em 10em;
+            padding: 0.6em;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: darkblue;
+            border-radius: 5px;
+        }
+
+        a:hover{
+            color:red;
+        }
+
+        h1{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        hr{
+            color: red;
+        }
+        .buttonbox{
+            width:80%;
+            margin-top:2%;
+            margin-bottom:2%;
+        }
+    </style>
 </html>
