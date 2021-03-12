@@ -39,7 +39,8 @@ def registerPage(request):
                     user=user, name=username, address=address)
 
             elif role == "helper":
-                Helper.objects.create(user=user, name=username)
+                Helper.objects.create(
+                    user=user, name=username, address=address)
             return redirect("login")
     else:
         form = RegisterForm()

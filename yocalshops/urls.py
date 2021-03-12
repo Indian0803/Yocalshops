@@ -14,6 +14,6 @@ urlpatterns = [
     path("helper_details/<int:id>/",
          views.helper_details, name="helper_details"),
     path("helper_delivery/<int:c_id>",
-         views.helper_delivery, name="helper_delivery"),
+         views.helper_delivery, name="helper_delivery")
 
 ]

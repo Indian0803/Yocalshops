@@ -15,9 +15,9 @@
         </div>
 
         <div class="button">
-            <a href="{% url 'helper_delivery' customer.id %}" class="btn btn-primary btn-lg btn-block bg-primary text-white">Deliver!</a>
+            <a href="{% url 'helper_delivery' customer.id %}" class="btn btn-primary btn-lg btn-block bg-primary text-white" id="deliver">Deliver!</a>
         </div>
-
+        
         <script>
             getLocation(); 
     
@@ -36,7 +36,7 @@
                 localStorage.setItem("lng", lng);
             }
         </script>
-    
+        
         <div class="order">
             <h1 class="orderhead">Order Information:</h1>
             Customer Name: {{customer.name}}
