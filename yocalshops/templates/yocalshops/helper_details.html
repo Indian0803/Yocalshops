@@ -2,8 +2,22 @@
 <html lang="en">
     <head>
         <title>{{customer.name}}'s Order</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body style = "background: white">
+        <div class="top">
+            {{ request.user }}
+        </div>
+        <a  class="btn btn-lg btn-block" href="{% url 'helper_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
+        
+        <div class="logout">
+            <a href="{% url 'logout' %}" style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
+        </div>
+
+        <div class="button">
+            <a href="{% url 'helper_delivery' customer.id %}" class="btn btn-primary btn-lg btn-block bg-primary text-white">Deliver!</a>
+        </div>
+
         <script>
             getLocation(); 
     
@@ -22,13 +36,6 @@
                 localStorage.setItem("lng", lng);
             }
         </script>
-        <div class="top">
-            <header style="font-size: 200%;">
-                <a href="{% url 'helper_home' %}">Home</a> Hi, {{ request.user }} 
-                <a style="margin-left:30%;" href="{% url 'helper_delivery' customer.id %}">Deliver!</a>
-                <a href="{% url 'logout' %}", style="margin-left:34%;">Logout</a>
-            </header>
-        </div>
     
         <div class="order">
             <h1 class="orderhead">Order Information:</h1>
@@ -55,17 +62,43 @@
         </div>
     </body>
     <style>
-        .top{padding: 2% 2%;
-        border-bottom-style: outset;
-        border-color: black;
-        background-color: white;}
-        
+        * {
+            margin: auto;
+        }
+        .top{
+            font-size: 30px;
+            position: absolute;
+            top:0;
+            left: 5%;
+            float: left;
+        }
+        .logout{
+            text-align: right;
+            font-size: 30px;
+        }
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        .button{
+                text-align:center;
+                width:80%;
+                margin-top:2%;
+        }
         .order{
             text-align:center;
+            margin-top: 2.5%;
         }
 
         .items{
             text-align:center;
+            margin-top:2.5%
         }
 
         .item{
@@ -75,5 +108,6 @@
             margin-top:1%;
             border: solid;
         }
+        
     </style>
 </html>
