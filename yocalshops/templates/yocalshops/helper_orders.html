@@ -2,31 +2,56 @@
 <html lang="en">
     <head>
         <title>Check Orders</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body style = "background: white">
         <div class="top">
-            <header style="font-size: 200%;"> 
-                <a href="{% url 'helper_home' %}">Home</a> Hi, {{ request.user }}
-                <a href="{% url 'logout' %}", style="margin-left:77%;">Logout</a>
-            </header>
+            {{ request.user }}
         </div>
+            <a class="btn btn-lg btn-block" href="{% url 'helper_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
+            <div class="logout">    
+                <a href="{% url 'logout' %}", style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
+            </div>
+        
         {% for name in customers %}
             <div class="orders">
                 Customer: {{ name }}
                 <br>
                 ShoppingStreet: {{ name.shoppingstreet }}
                 <br>
-                <a href="{% url 'helper_details' name.id %}">Details</a>
+                
+                <a type ="button" class="btn btn-primary" href="{% url 'helper_details' name.id %}" style="transform:translateY(10%);">Details</a>
+                
             </div>
         {% endfor %} 
     </body>
     <style>
-        .top{padding: 2% 2%;
-        border-bottom-style: outset;
-        border-color: black;
-        background-color: white;}
-
+        .top{
+                font-size: 30px;
+                position: absolute;
+                top:0;
+                left: 5%;
+                float: left;
+        }
+        .logout{
+                    position: absolute;
+                    right: 0%;
+                    text-align: right;
+                    font-size: 30px;
+        
+        }
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
         .orders{
+            position: relative;
             text-align: center;
             padding:1%;
             width:80%;

@@ -7,6 +7,9 @@ from django.forms import inlineformset_factory
 from .decorators import unauthenticated_user, allowed_users
 from .forms import *
 from .models import *
+from pygeocoder import Geocoder
+import googlemaps
+import geocoder
 # Create your views here.
 
 # display the home page
@@ -139,9 +142,15 @@ def customer_status(request):
         status = None
         context = {"status": status}
     else:
+
+        address = customer.address
+        g = geocoder.osm(address, timeout=5.0)
+        clat = g.latlng[0]
+        clng = g.latlng[1]
         status = customer.status
         helper = customer.helper
-        context = {"status": status, "helper": helper}
+        context = {"clat": clat, "clng": clng,
+                   "status": status, "helper": helper}
 
     # Helper's address
     return render(request, "yocalshops/customer_status.html", context)

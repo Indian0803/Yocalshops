@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{ request.user }}
-    <a href="{% url 'logout' %}">Logout</a>
-    <a href="{% url 'customer_home' %}">Home</a>
-    
-    <form method="POST" action="">
-        {% csrf_token %}
+    <head>
+        <title>Customer Order</title>
+        <style>
+            .order-link{
+            text-decoration: none;
+            color:black;
+            }
+            .container h1{
+                font-size: 1em;
+                margin: 1em 10em;
+                padding: 0.6em;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: darkblue;
+                border-radius: 5px;
+            }
 
-        {{oform}}
+            a:hover{
+                color:red;
+            }
+
+            h1{
+                display: flex;
+                justify-content: space-around;
+            }
+
+            hr{
+                color: red;
+            }
+
+        </style>
+    </head>
+
+    <body style=text-align:center;>
+        <nav id="navbar">
+            <div class="container">
+                {{ request.user }}
+                <a class = "order-link" href="{% url 'customer_home' %}">Home</a>
+                <a class = "order-link" href="{% url 'logout' %}">Logout</a>
+            </div>
+        </nav>
         <hr>
-        {{ formset.management_form }}
-        {% for form in formset %}
-            {{form}}
+
+        <header id = "main-header">
+            <div class="container">
+                <h1>Make an Order</h1>
+            </div>
+        </header>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            {{oform}}
             <hr>
-        {% endfor %}
-        <input type="submit" name="Submit">
-    </form>
+            {{ formset.management_form }}
+            {% for form in formset %}
+                {{form}}
+                <hr size = -1>
+            {% endfor %}
+                <input type="submit" name="Submit">
+        </form>
+    </body>
 </html>

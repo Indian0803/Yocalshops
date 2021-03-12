@@ -9,7 +9,7 @@
             {{ request.user }}
         </div>
 
-        <a  class="btn btn-lg btn-block" href="{% url 'helper_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
+        <a  class="btn btn-lg btn-block " href="{% url 'helper_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
         
         <div class="logout">
             <a href="{% url 'logout' %}" style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
@@ -113,64 +113,63 @@
 
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKwEXZuRP9ZR87MI4eFZmPHYD7fTOsQFk&callback=initMap"></script>
             
-            
-            <style>
-                * {
-                    margin: auto;
-
-                }
-                .top{
-                font-size: 30px;
-                position: absolute;
-                top:0;
-                left: 5%;
-                float: left;
-                }
-                .logout{
-                    text-align: right;
-                    font-size: 30px;
-                }
-                a:link {
-                    color: black;
-                    background-color: transparent;
-                    text-decoration: none;
-                }
-                a:visited {
-                    color: black;
-                    background-color: transparent;
-                    text-decoration: none;
-                }
-                #map{
-                    position: absolute;
-                    height: 80%;
-                    width: 80%;
-                    margin:auto;
-                    margin-top:2%;
-                    margin-left:10%;
-                    border-style: solid;
-                }
-                .order{
-                text-align:center;
-                margin-top:2.5%
-                }
-
-                .items{
-                    text-align:center;
-                    margin-top:2%
-                }
-                .item{
-                padding:1%;
-                width:80%;
-                margin:auto;
-                margin-top:1%;
-                border: solid;
-                }
-                .button{
-                    text-align:center;
-                    width:80%;
-                    margin-top:2%;
-                }
-            </style>
         {% endif %}
+        <style>
+            * {
+                margin: auto;
+
+            }
+            .top{
+            font-size: 30px;
+            position: absolute;
+            top:0;
+            left: 5%;
+            float: left;
+            }
+            .logout{
+                text-align: right;
+                font-size: 30px;
+            }
+            a:link {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            a:visited {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            #map{
+                position: absolute;
+                height: 80%;
+                width: 80%;
+                margin:auto;
+                margin-top:2%;
+                margin-left:10%;
+                border-style: solid;
+            }
+            .order{
+            text-align:center;
+            margin-top:2.5%
+            }
+
+            .items{
+                text-align:center;
+                margin-top:2%
+            }
+            .item{
+            padding:1%;
+            width:80%;
+            margin:auto;
+            margin-top:1%;
+            border: solid;
+            }
+            .button{
+                text-align:center;
+                width:80%;
+                margin-top:2%;
+            }
+        </style>
     </body>
 </html>
