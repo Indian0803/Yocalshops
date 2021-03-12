@@ -41,7 +41,7 @@ def registerPage(request):
 
             elif role == "helper":
                 Helper.objects.create(
-                    user=user, name=username, address=address)
+                    user=user, name=username)
             return redirect("login")
     else:
         form = RegisterForm()
@@ -141,10 +141,12 @@ def customer_status(request):
         context = {"status": status}
     else:
 
+        # getting user's address
         address = customer.address
         g = geocoder.osm(address, timeout=5.0)
         clat = g.latlng[0]
         clng = g.latlng[1]
+
         status = customer.status
         helper = customer.helper
         context = {"clat": clat, "clng": clng,
@@ -210,6 +212,12 @@ def helper_delivery(request, c_id):
         shoppingstreet = customer.shoppingstreet
 
         items = Item.objects.filter(customer=customer)
+
+        # getting helper's current location and saving it in helper object
+        g = geocoder.get("me")
+        helper.latitude = g.latlng[0]
+        helper.longitude = g.latlng[1]
+
         # When the user clicks on the button inside the template, the delivering is completed and the order is deleted
         if request.method == "POST":
             customer.status = None

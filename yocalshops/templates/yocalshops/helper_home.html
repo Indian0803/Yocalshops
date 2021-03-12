@@ -2,8 +2,15 @@
 <html lang="en">
     <head>
         <title>Helper Home</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
             .order_delivery{
+                position: absolute;
+                top:50%;
+                left: 50%;
+                width: 80%;
+                transform: translateX(-55%)translateY(-300%);
+
             display: flex;
             justify-content: space-around;
             }
@@ -15,28 +22,45 @@
                 color: white;
                 border-radius: 10px;
                 padding: 1% 2%; 
+                transform: translateX(10%)translateY(300%);
                 font-family: Arial, Helvetica, sans-serif;
-            }
+                opacity: 85%;
+            }        
         </style>
     </head>
-    <body>
+    <body style="background-image: url(/static/yocalshops/shotengai.jpg);background-size: 100%;">
         <div class="top">
-            <header style="font-size: 200%;">
-                Hi, {{ request.user }}
-                <a href="{% url 'logout' %}", style="margin-left:80%;">Logout</a>
-            </header>            
+            Hi, {{ request.user }}
         </div>
-
+        <div class="logout">
+            <a class="btn btn-primary btn-lg btn-block" href="{% url 'logout' %}", style=" font-size: 30px;  right: 0%; text-align: center;">Logout</a>    
+        </div>
         <div class = order_delivery>
-            <a class = "order-link" href="{% url 'helper_orders' %}">Accept an Order</a>
+            <a class = "order-link" href="{% url 'helper_orders' %}" >Accept an Order</a>
             <hr width="1" size = 500>
             <a class = "order-link" href="{% url 'helper_delivery' c_id %}">Deliver Your Order</a>
         </div>
     </body>
     <style>
-        .top{padding: 2% 4%;
-        border-bottom-style: outset;
-        border-color: black;
-        background-color: white;}
+        .top{
+            text-align: center;
+            font-size: 40px;
+                position: absolute;
+                top:0;
+                left: 0%;
+                width: 30%;
+                float: left;
+                background-color: black;
+                color: white;
+                padding: 0.5%;
+                opacity: 75%;
+        }
+        
+                .logout{
+                    position: absolute;
+                    right: 0%;
+                    text-align: right;
+                    font-size: 30px;
+                }
     </style>
 </html>
