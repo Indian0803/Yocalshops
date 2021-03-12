@@ -8,7 +8,6 @@ from .decorators import unauthenticated_user, allowed_users
 from .forms import *
 from .models import *
 import geocoder
-# Create your views here.
 
 # display the home page
 
@@ -141,7 +140,7 @@ def customer_status(request):
         context = {"status": status}
     else:
 
-        # getting user's address
+        # getting customer's address
         address = customer.address
         g = geocoder.osm(address, timeout=5.0)
         clat = g.latlng[0]
@@ -214,7 +213,8 @@ def helper_delivery(request, c_id):
         items = Item.objects.filter(customer=customer)
 
         # getting helper's current location and saving it in helper object
-        g = geocoder.get("me")
+        g = geocoder.ip("me", key="AIzaSyDXrOFblUU_XMSP8UEXav0Y25qv2q9Fl10")
+        print(g.latlng)
         helper.latitude = g.latlng[0]
         helper.longitude = g.latlng[1]
 
