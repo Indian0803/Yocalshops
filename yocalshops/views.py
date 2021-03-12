@@ -215,9 +215,11 @@ def helper_delivery(request, c_id):
         # getting helper's current location and saving it in helper object
         g = geocoder.ip("me", key="AIzaSyDXrOFblUU_XMSP8UEXav0Y25qv2q9Fl10")
         print(g.latlng)
+        print(g.latlng[0])
         helper.latitude = g.latlng[0]
+        print(helper.latitude)
         helper.longitude = g.latlng[1]
-
+        helper.save()
         # When the user clicks on the button inside the template, the delivering is completed and the order is deleted
         if request.method == "POST":
             customer.status = None
