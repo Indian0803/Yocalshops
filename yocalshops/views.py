@@ -145,13 +145,11 @@ def customer_status(request):
         g = geocoder.osm(address, timeout=5.0)
         clat = g.latlng[0]
         clng = g.latlng[1]
-
         status = customer.status
         helper = customer.helper
         context = {"clat": clat, "clng": clng,
                    "status": status, "helper": helper}
 
-    # Helper's address
     return render(request, "yocalshops/customer_status.html", context)
 
 # display the helper home page
@@ -213,13 +211,18 @@ def helper_delivery(request, c_id):
         items = Item.objects.filter(customer=customer)
 
         # getting helper's current location and saving it in helper object
-        g = geocoder.ip("me", key="AIzaSyDXrOFblUU_XMSP8UEXav0Y25qv2q9Fl10")
-        print(g.latlng)
-        print(g.latlng[0])
-        helper.latitude = g.latlng[0]
-        print(helper.latitude)
-        helper.longitude = g.latlng[1]
+        helper_location = geocoder.ip(
+            "me", key="AIzaSyDXrOFblUU_XMSP8UEXav0Y25qv2q9Fl10")
+        helper.latitude = helper_location.latlng[0]
+        helper.longitude = helper_location.latlng[1]
         helper.save()
+
+        address = customer.address
+        customer_location = geocoder.osm(
+            address, key="AIzaSyDXrOFblUU_XMSP8UEXav0Y25qv2q9Fl10")
+        c_lat = customer_location.latlng[0]
+        c_lng = customer_location.latlng[1]
+
         # When the user clicks on the button inside the template, the delivering is completed and the order is deleted
         if request.method == "POST":
             customer.status = None
@@ -229,7 +232,7 @@ def helper_delivery(request, c_id):
             Item.objects.filter(customer=customer).delete()
             return redirect("helper_home")
         context = {"customer": customer,
-                   "items": items, "c_id": c_id, "shoppingstreet": shoppingstreet}
+                   "items": items, "c_id": c_id, "shoppingstreet": shoppingstreet, "helper": helper, "c_lat": c_lat, "c_lng": c_lng}
     else:
         context = {"c_id": c_id}
     return render(request, "yocalshops/helper_delivery.html", context)

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Information (coordinates) about Helper will be stored in this model
+
 
 class Helper(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -11,7 +13,7 @@ class Helper(models.Model):
     def __str__(self):
         return str(self.name)
 
-
+# information such as coordinates and address about shoppingstreets will be stored in this model
 class ShoppingStreet(models.Model):
     name = models.CharField(max_length=200, null=True)
     ward = models.CharField(max_length=200, null=True)
@@ -22,7 +24,7 @@ class ShoppingStreet(models.Model):
     def __str__(self):
         return str(self.name)
 
-
+# information about orders, address, parent helper, etc will be held in this model
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
@@ -40,7 +42,7 @@ class Customer(models.Model):
     def __str__(self):
         return str(self.name)
 
-
+# parent model is customer, and contains information about each items
 class Item(models.Model):
     name = models.CharField(max_length=200, null=True)
     CATEGORY = (

@@ -1,8 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Check Orders</title>
+        <title>Check Orders | Yocalshops</title>
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            .top{
+                    font-size: 30px;
+                    position: absolute;
+                    top:0;
+                    left: 5%;
+                    float: left;
+            }
+            .logout{
+                        position: absolute;
+                        right: 0%;
+                        text-align: right;
+                        font-size: 30px;
+            
+            }
+            a:link {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            a:visited {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .orders{
+                position: relative;
+                text-align: center;
+                padding:1%;
+                width:80%;
+                margin:auto;
+                margin-top:1%;
+                border: solid;
+            }
+        </style>
     </head>
     <body style = "background: white">
         <div class="top">
@@ -25,39 +62,4 @@
             </div>
         {% endfor %} 
     </body>
-    <style>
-        .top{
-                font-size: 30px;
-                position: absolute;
-                top:0;
-                left: 5%;
-                float: left;
-        }
-        .logout{
-                    position: absolute;
-                    right: 0%;
-                    text-align: right;
-                    font-size: 30px;
-        
-        }
-        a:link {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        a:visited {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        .orders{
-            position: relative;
-            text-align: center;
-            padding:1%;
-            width:80%;
-            margin:auto;
-            margin-top:1%;
-            border: solid;
-        }
-    </style>
 </html>

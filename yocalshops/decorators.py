@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
 
+# If a user tries to access certain pages without being logged in, do not allow them to access
+
 
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
@@ -12,6 +14,8 @@ def unauthenticated_user(view_func):
             return(view_func(request, *args, **kwargs))
 
     return wrapper_func
+
+# restricting user type- so that helpers will not access customer page, and vice versa
 
 
 def allowed_users(allowed_roles=[]):

@@ -1,32 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-    <div class="top">
-        <header style="font-size: 200%;"> 
-            <a href="{% url 'customer_home' %}">Home</a> Hi, {{ request.user }}
-            <a href="{% url 'logout' %}", style="margin-left:75%;">Logout</a>
-        </header>
-    </div>
-    {% if status == "Pending" %}
-        <h1 class="text">Sorry! Please Wait Until Your Order Gets Accepted</h1>
-    
-    {% elif status == None %}
-        <h1 class="text">You Have No Order Created Yet!</h1>
-    
-    {% else %}
-        <h1 class="text">Your Helper Is On The Way</h1>
-        <h1>Your Helper: {{helper.name}}</h1>
-    {% endif %}
-
-    <style>
-        .top{padding: 2% 4%;
-        border-bottom-style: outset;
-        border-color: black;
-        background-color: white;
-        }
-        .text{
-            text-align:center
-        }
-    </style>
+    <head>
+        <title>Check Your Order | Yocalshops</title>
         
-</html>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            * {
+                margin: auto;
+            }
+            .top{
+            font-size: 30px;
+            position: absolute;
+            top:0;
+            left: 5%;
+            float: left;
+            }
+            .logout{
+                text-align: right;
+                font-size: 30px;
+            }
+            a:link {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            a:visited {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    
+    <body style = "background: white">
 
+        <div class="top">
+            {{ request.user }}
+        </div>
+
+        <a  class="btn btn-lg btn-block " href="{% url 'customer_home' %}" style = "text-align: center; font-size: 30px; transform: translateY(-10%);" role="button">Home</a>
+        
+        <div class="logout">
+            <a href="{% url 'logout' %}" style="float: right; font-size: 30px; transform: translateY(-125%)translateX(-50%); ">Logout</a>
+        </div>
+        
+        {% if status == "Pending" %}
+            <p style="position:absolute; width: 100%; font-size: 50px; top:50%; left: 50%; transform: translateX(-30%) translateY(-50%); margin-left:-4%">Please Wait Until Your Order Gets Accepted</p>
+        
+        {% elif status == None %}
+            <p style="position:absolute; width: 100%; font-size: 50px; top:50%; left: 50%; transform: translateX(-30%) translateY(-50%); margin-left:5%">You Have No Order Created Yet</p>
+            
+            <div class="buttonbox">
+                <a href="{% url 'customer_orders' %}" class="btn btn-primary btn-lg btn-block">Create Your Order Now</a>
+            </div>
+            
+            <style>
+                .buttonbox{
+                width:80%;
+                margin-top:30%;
+                margin-bottom:2%;
+                }
+            </style>
+        
+        {% else %}
+            <div class="heading">
+                <h1 class="helper">Your Helper: {{helper.name}}</h1>
+                <h2 class="order">Order Status: {{ status }}</h2>
+            </div>
+
+            <div id = "map"></div>
+            
+            {{ helper.latitude|json_script:"hlat" }}
+            {{ helper.longitude|json_script:"hlng" }}
+            {{ clat|json_script:"clat" }}
+            {{ clng|json_script:"clng" }}
+            
+            <script>
+                
+                var hlat = JSON.parse(document.getElementById("hlat").textContent);
+                var hlng = JSON.parse(document.getElementById("hlng").textContent);
+                var clat = JSON.parse(document.getElementById("clat").textContent);
+                var clng = JSON.parse(document.getElementById("clng").textContent);
+                
+                function initMap(){
+                    var map = new google.maps.Map(document.getElementById("map"),{
+                        zoom: 13,
+                        center: {lat: hlat, lng: hlng}
+                    });
+                    function marker(property){
+                            const marker = new google.maps.Marker({
+                                position:property.location,
+                                map:map,
+                                icon: property.icon,
+                        });
+                    }
+                    marker({location:{lat:hlat, lng: hlng}, icon:{
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    fillColor: '#FF0033',
+                    strokeColor: '#ffffff',
+                    }});
+                    marker({location:{lat:clat, lng: clng}, icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 10,
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    fillColor: '#5384ED',
+                    strokeColor: '#ffffff',
+                    }});
+                }
+            </script>
+        
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKwEXZuRP9ZR87MI4eFZmPHYD7fTOsQFk&callback=initMap"></script>
+        
+            <style>
+                * {
+                    margin: auto;
+        
+                }
+                #map{
+                position: absolute;
+                height: 80%;
+                width: 80%;
+                margin:auto;
+                margin-top:2%;
+                margin-left:10%;
+                border-style: solid;
+                margin-bottom:2%;
+                }
+                .heading{
+                    text-align:center;
+                }
+            </style>
+        {% endif %}
+    </body>
+</html>

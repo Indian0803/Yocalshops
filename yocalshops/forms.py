@@ -6,6 +6,8 @@ from django.db import models
 from django import forms
 from .models import *
 
+# Just a default django registering form with additional address field
+
 
 class RegisterForm(UserCreationForm):
     user_type = forms.fields.ChoiceField(

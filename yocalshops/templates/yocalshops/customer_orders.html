@@ -1,8 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Customer Order</title>
+        <title>Customer Order | Yocalshops</title>
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            * {
+                margin: auto;
+            }
+            .top{
+            font-size: 30px;
+            position: absolute;
+            top:0;
+            left: 5%;
+            float: left;
+            }
+            .logout{
+                text-align: right;
+                font-size: 30px;
+            }
+            a:link {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            a:visited {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .order-link{
+            text-decoration: none;
+            color:black;
+            }
+            .container h1{
+                font-size: 2em;
+                margin: 1em 10em;
+                padding: 0.6em;
+                color:black;
+                font-family: Arial, Helvetica, sans-serif;
+                border-radius: 5px;
+            }
+    
+            a:hover{
+                color:red;
+            }
+    
+            h1{
+                display: flex;
+                justify-content: space-around;
+            }
+    
+            hr{
+                color: red;
+            }
+            .buttonbox{
+                width:80%;
+                margin-top:2%;
+                margin-bottom:2%;
+            }
+        </style>
     </head>
 
     <body style=text-align:center;>
@@ -18,7 +76,7 @@
 
         <header id = "main-header">
             <div class="container">
-                <h1>Make an Order</h1>
+                <h1>Create Your Order Here</h1>
             </div>
         </header>
 
@@ -27,71 +85,16 @@
 
             {{oform}}
             <hr>
+            
             {{ formset.management_form }}
             {% for form in formset %}
                 {{form}}
                 <hr size = -1>
             {% endfor %}
+            
             <div class="buttonbox">
-                <input type="submit" value="Create Order" class="btn btn-primary btn-lg btn-block">
+                <input type="submit" value="Create/Update Your Order" class="btn btn-primary btn-lg btn-block">
             </div>
         </form>
     </body>
-    <style>
-        * {
-            margin: auto;
-        }
-        .top{
-        font-size: 30px;
-        position: absolute;
-        top:0;
-        left: 5%;
-        float: left;
-        }
-        .logout{
-            text-align: right;
-            font-size: 30px;
-        }
-        a:link {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        a:visited {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        .order-link{
-        text-decoration: none;
-        color:black;
-        }
-        .container h1{
-            font-size: 1em;
-            margin: 1em 10em;
-            padding: 0.6em;
-            color: white;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: darkblue;
-            border-radius: 5px;
-        }
-
-        a:hover{
-            color:red;
-        }
-
-        h1{
-            display: flex;
-            justify-content: space-around;
-        }
-
-        hr{
-            color: red;
-        }
-        .buttonbox{
-            width:80%;
-            margin-top:2%;
-            margin-bottom:2%;
-        }
-    </style>
 </html>

@@ -9,6 +9,40 @@
 
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            body{
+                color: white;
+                background-image: url("/static/yocalshops/shotengai.jpg");
+                background-size:100% auto;
+            }
+            div{
+                text-align:center;
+            }
+            .text{
+                margin-top: 20%;
+                font-size: 300%;
+            }
+            .btn {
+                font-size:200%;
+            }
+            .register{
+                margin-top: 20%;
+            }
+            .login{
+                margin-top: 3%;
+                padding-bottom: 4%;
+                font-size: 200%;
+            }
+            span { 
+                color: white; 
+                font: bold 100%/120% Helvetica, Sans-Serif; 
+                letter-spacing: -1px;  
+                background: rgb(0, 0, 0); 
+                background: rgba(0, 0, 0, 0.7);
+                padding: 0.7%; 
+            }
+        </style>
     </head>
     <div class="text">
         <span>Missing Your Favorite Shopping Street? <br>Start Shopping From Home At Yocalshops Now!</span>
@@ -20,40 +54,7 @@
     <div class="login">
         <a href="{% url 'login' %}">Login</a>
     </div>
-    
-    <style>
-        body{
-            color: white;
-            background-image: url("/static/yocalshops/shotengai.jpg");
-            background-size:100% auto;
-        }
-        div{
-            text-align:center;
-        }
-        .text{
-            margin-top: 20%;
-            font-size: 300%;
-        }
-        .btn {
-            font-size:200%;
-        }
-        .register{
-            margin-top: 20%;
-        }
-        .login{
-            margin-top: 3%;
-            padding-bottom: 4%;
-            font-size: 200%;
-        }
-        span { 
-            color: white; 
-            font: bold 100%/120% Helvetica, Sans-Serif; 
-            letter-spacing: -1px;  
-            background: rgb(0, 0, 0); 
-            background: rgba(0, 0, 0, 0.7);
-            padding: 0.7%; 
-        }
-    </style>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

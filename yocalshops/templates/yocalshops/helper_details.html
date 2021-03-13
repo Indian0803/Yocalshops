@@ -1,8 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{customer.name}}'s Order</title>
+        <title>{{customer.name}}'s Order | Yocalshops</title>
+        
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <style>
+            * {
+                margin: auto;
+            }
+            .top{
+                font-size: 30px;
+                position: absolute;
+                top:0;
+                left: 5%;
+                float: left;
+            }
+            .logout{
+                text-align: right;
+                font-size: 30px;
+            }
+            a:link {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            a:visited {
+                color: black;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .button{
+                    text-align:center;
+                    width:80%;
+                    margin-top:2%;
+            }
+            .order{
+                text-align:center;
+                margin-top: 2.5%;
+            }
+    
+            .items{
+                text-align:center;
+                margin-top:2.5%
+            }
+    
+            .item{
+                padding:1%;
+                width:80%;
+                margin:auto;
+                margin-top:1%;
+                border: solid;
+            }
+            
+        </style>
     </head>
     <body style = "background: white">
         <div class="top">
@@ -61,53 +112,4 @@
             {% endfor %}
         </div>
     </body>
-    <style>
-        * {
-            margin: auto;
-        }
-        .top{
-            font-size: 30px;
-            position: absolute;
-            top:0;
-            left: 5%;
-            float: left;
-        }
-        .logout{
-            text-align: right;
-            font-size: 30px;
-        }
-        a:link {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        a:visited {
-            color: black;
-            background-color: transparent;
-            text-decoration: none;
-        }
-        .button{
-                text-align:center;
-                width:80%;
-                margin-top:2%;
-        }
-        .order{
-            text-align:center;
-            margin-top: 2.5%;
-        }
-
-        .items{
-            text-align:center;
-            margin-top:2.5%
-        }
-
-        .item{
-            padding:1%;
-            width:80%;
-            margin:auto;
-            margin-top:1%;
-            border: solid;
-        }
-        
-    </style>
 </html>
